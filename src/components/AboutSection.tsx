@@ -95,11 +95,10 @@ const ExperienceCard = ({
       style={{ opacity, x, scale }}
       onClick={onSelect}
       whileHover={{ 
-        scale: 1.02, 
-        backgroundColor: "hsl(var(--accent))",
+        scale: 1.02,
         transition: { duration: 0.2 }
       }}
-      className="group relative p-6 rounded-lg border border-border cursor-pointer transition-colors"
+      className="group relative p-6 rounded-lg border border-border cursor-pointer transition-colors hover:border-primary/50"
     >
       {/* Timeline connector */}
       <div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-primary to-transparent -translate-x-8 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -154,7 +153,7 @@ const AboutSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <section className="py-32 px-6 md:px-12 lg:px-20 bg-card">
+    <section id="about" className="py-32 px-6 md:px-12 lg:px-20 bg-card">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           <motion.div
