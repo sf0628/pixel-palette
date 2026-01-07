@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
+import ThemeToggle from "./ThemeToggle";
 
 const Navigation = () => {
   const location = useLocation();
@@ -19,17 +20,17 @@ const Navigation = () => {
       <div className="flex items-center justify-between max-w-7xl mx-auto">
         <Link 
           to="/" 
-          className="font-display text-xl font-semibold tracking-tight text-foreground hover:text-primary transition-colors duration-300"
+          className="text-xl font-semibold tracking-tight text-foreground hover:text-primary transition-colors duration-300"
         >
           JD.
         </Link>
         
-        <div className="flex items-center gap-8">
+        <div className="flex items-center gap-6">
           {links.map((link) => (
             <Link
               key={link.path}
               to={link.path}
-              className={`relative font-display text-sm tracking-wide transition-colors duration-300 ${
+              className={`relative text-sm font-medium tracking-wide transition-colors duration-300 ${
                 location.pathname === link.path 
                   ? "text-primary" 
                   : "text-muted-foreground hover:text-foreground"
@@ -45,6 +46,7 @@ const Navigation = () => {
               )}
             </Link>
           ))}
+          <ThemeToggle />
         </div>
       </div>
     </motion.nav>
