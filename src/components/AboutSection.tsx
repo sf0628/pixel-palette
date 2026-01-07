@@ -1,4 +1,12 @@
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef, useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 
 const skills = [
   "TypeScript",
@@ -11,7 +19,140 @@ const skills = [
   "WebGL",
 ];
 
+interface Experience {
+  title: string;
+  company: string;
+  period: string;
+  description: string;
+  achievements: string[];
+  technologies: string[];
+}
+
+const experiences: Experience[] = [
+  {
+    title: "Senior Developer",
+    company: "Acme Studios",
+    period: "2021—Present",
+    description:
+      "Leading frontend architecture and mentoring a team of 5 developers. Spearheading the migration to modern React patterns and implementing design systems.",
+    achievements: [
+      "Reduced bundle size by 40% through code splitting",
+      "Implemented CI/CD pipeline reducing deploy time by 60%",
+      "Led accessibility initiative achieving WCAG 2.1 AA compliance",
+    ],
+    technologies: ["React", "TypeScript", "GraphQL", "AWS"],
+  },
+  {
+    title: "Full-Stack Developer",
+    company: "StartupXYZ",
+    period: "2018—2021",
+    description:
+      "Built and scaled the core product from MVP to serving 100k+ users. Owned the entire technical stack from database design to frontend implementation.",
+    achievements: [
+      "Architected real-time collaboration features",
+      "Optimized database queries improving response time by 3x",
+      "Integrated payment processing handling $2M+ annually",
+    ],
+    technologies: ["Node.js", "React", "PostgreSQL", "Redis"],
+  },
+  {
+    title: "Junior Developer",
+    company: "Digital Agency Co",
+    period: "2016—2018",
+    description:
+      "Developed responsive websites and web applications for diverse clients across industries. Collaborated closely with designers to implement pixel-perfect interfaces.",
+    achievements: [
+      "Delivered 20+ client projects on time and budget",
+      "Introduced component-based architecture to the team",
+      "Built internal tools that saved 10 hours/week",
+    ],
+    technologies: ["JavaScript", "React", "SASS", "WordPress"],
+  },
+];
+
+const ExperienceCard = ({
+  experience,
+  index,
+  onSelect,
+}: {
+  experience: Experience;
+  index: number;
+  onSelect: () => void;
+}) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: cardRef,
+    offset: ["start end", "center center"],
+  });
+
+  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [0, 1, 1]);
+  const x = useTransform(scrollYProgress, [0, 0.5, 1], [50, 0, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.9, 1, 1]);
+
+  return (
+    <motion.div
+      ref={cardRef}
+      style={{ opacity, x, scale }}
+      onClick={onSelect}
+      whileHover={{ 
+        scale: 1.02, 
+        backgroundColor: "hsl(var(--accent))",
+        transition: { duration: 0.2 }
+      }}
+      className="group relative p-6 rounded-lg border border-border cursor-pointer transition-colors"
+    >
+      {/* Timeline connector */}
+      <div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-primary to-transparent -translate-x-8 opacity-0 group-hover:opacity-100 transition-opacity" />
+      
+      {/* Timeline dot */}
+      <motion.div
+        initial={{ scale: 0 }}
+        whileInView={{ scale: 1 }}
+        transition={{ delay: index * 0.1, type: "spring" }}
+        className="absolute -left-8 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-primary opacity-0 group-hover:opacity-100 transition-opacity"
+      />
+
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
+        <div className="space-y-1">
+          <motion.p 
+            className="font-display font-medium text-foreground group-hover:text-primary transition-colors"
+          >
+            {experience.title}
+          </motion.p>
+          <p className="text-sm text-muted-foreground">{experience.company}</p>
+        </div>
+        <span className="text-sm text-muted-foreground font-mono">
+          {experience.period}
+        </span>
+      </div>
+
+      {/* Preview hint */}
+      <motion.div
+        initial={{ opacity: 0, height: 0 }}
+        whileHover={{ opacity: 1, height: "auto" }}
+        className="overflow-hidden"
+      >
+        <p className="text-sm text-muted-foreground mt-3 line-clamp-2">
+          {experience.description}
+        </p>
+        <div className="flex items-center gap-2 mt-3 text-xs text-primary">
+          <span>Click to view details</span>
+          <motion.span
+            animate={{ x: [0, 4, 0] }}
+            transition={{ repeat: Infinity, duration: 1.5 }}
+          >
+            →
+          </motion.span>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+};
+
 const AboutSection = () => {
+  const [selectedExperience, setSelectedExperience] = useState<Experience | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
   return (
     <section className="py-32 px-6 md:px-12 lg:px-20 bg-card">
       <div className="max-w-7xl mx-auto">
@@ -75,30 +216,99 @@ const AboutSection = () => {
               ))}
             </div>
 
-            <div className="mt-12 pt-8 border-t border-border">
-              <h3 className="font-display text-lg font-semibold text-foreground mb-4">
+            <div ref={containerRef} className="mt-12 pt-8 border-t border-border">
+              <h3 className="font-display text-lg font-semibold text-foreground mb-6">
                 Experience
               </h3>
-              <div className="space-y-4">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <p className="font-display font-medium text-foreground">Senior Developer</p>
-                    <p className="text-sm text-muted-foreground">Acme Studios</p>
-                  </div>
-                  <span className="text-sm text-muted-foreground">2021—Present</span>
-                </div>
-                <div className="flex justify-between items-start">
-                  <div>
-                    <p className="font-display font-medium text-foreground">Full-Stack Developer</p>
-                    <p className="text-sm text-muted-foreground">StartupXYZ</p>
-                  </div>
-                  <span className="text-sm text-muted-foreground">2018—2021</span>
-                </div>
+              <div className="space-y-4 pl-8 relative">
+                {/* Timeline line */}
+                <div className="absolute left-0 top-0 bottom-0 w-px bg-border" />
+                
+                {experiences.map((experience, index) => (
+                  <ExperienceCard
+                    key={experience.company}
+                    experience={experience}
+                    index={index}
+                    onSelect={() => setSelectedExperience(experience)}
+                  />
+                ))}
               </div>
             </div>
           </motion.div>
         </div>
       </div>
+
+      {/* Experience Detail Dialog */}
+      <Dialog open={!!selectedExperience} onOpenChange={() => setSelectedExperience(null)}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <DialogTitle className="font-display text-2xl">
+                {selectedExperience?.title}
+              </DialogTitle>
+              <DialogDescription className="flex items-center gap-2 mt-1">
+                <span>{selectedExperience?.company}</span>
+                <span className="text-primary">•</span>
+                <span className="font-mono">{selectedExperience?.period}</span>
+              </DialogDescription>
+            </motion.div>
+          </DialogHeader>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.1 }}
+            className="space-y-6 mt-4"
+          >
+            <p className="text-muted-foreground leading-relaxed">
+              {selectedExperience?.description}
+            </p>
+
+            <div>
+              <h4 className="font-display font-semibold text-foreground mb-3">
+                Key Achievements
+              </h4>
+              <ul className="space-y-2">
+                {selectedExperience?.achievements.map((achievement, index) => (
+                  <motion.li
+                    key={index}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.2 + index * 0.1 }}
+                    className="flex items-start gap-3 text-muted-foreground"
+                  >
+                    <span className="text-primary mt-1.5">▸</span>
+                    {achievement}
+                  </motion.li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-display font-semibold text-foreground mb-3">
+                Technologies Used
+              </h4>
+              <div className="flex flex-wrap gap-2">
+                {selectedExperience?.technologies.map((tech, index) => (
+                  <motion.span
+                    key={tech}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.3 + index * 0.05 }}
+                    className="px-3 py-1 text-sm bg-accent text-accent-foreground rounded-full"
+                  >
+                    {tech}
+                  </motion.span>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 };
