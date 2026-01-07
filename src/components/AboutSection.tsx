@@ -89,35 +89,33 @@ const ExperienceCard = ({
   const x = useTransform(scrollYProgress, [0, 0.5, 1], [50, 0, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.9, 1, 1]);
 
+  // Handle keyboard navigation
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      onSelect();
+    }
+  };
+
   return (
     <motion.div
       ref={cardRef}
       style={{ opacity, x, scale }}
       onClick={onSelect}
-      whileHover={{ 
-        scale: 1.02,
-        transition: { duration: 0.2 }
-      }}
-      className="group relative p-6 rounded-lg border border-border cursor-pointer transition-colors hover:border-primary/50"
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+      role="button"
+      aria-label={`View details for ${experience.title} at ${experience.company}`}
+      className="group relative p-6 rounded-lg border border-border cursor-pointer transition-colors hover:border-primary/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background motion-reduce:transition-none motion-reduce:transform-none"
     >
       {/* Timeline connector */}
-      <div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-primary to-transparent -translate-x-8 opacity-0 group-hover:opacity-100 transition-opacity" />
-      
-      {/* Timeline dot */}
-      <motion.div
-        initial={{ scale: 0 }}
-        whileInView={{ scale: 1 }}
-        transition={{ delay: index * 0.1, type: "spring" }}
-        className="absolute -left-8 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-primary opacity-0 group-hover:opacity-100 transition-opacity"
-      />
+      <div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-primary to-transparent -translate-x-8 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity motion-reduce:transition-none" />
 
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
         <div className="space-y-1">
-          <motion.p 
-            className="font-display font-medium text-foreground group-hover:text-primary transition-colors"
-          >
+          <p className="font-display font-medium text-foreground group-hover:text-primary group-focus-visible:text-primary transition-colors motion-reduce:transition-none">
             {experience.title}
-          </motion.p>
+          </p>
           <p className="text-sm text-muted-foreground">{experience.company}</p>
         </div>
         <span className="text-sm text-muted-foreground font-mono">
@@ -126,24 +124,15 @@ const ExperienceCard = ({
       </div>
 
       {/* Preview hint */}
-      <motion.div
-        initial={{ opacity: 0, height: 0 }}
-        whileHover={{ opacity: 1, height: "auto" }}
-        className="overflow-hidden"
-      >
+      <div className="overflow-hidden max-h-0 group-hover:max-h-40 group-focus-visible:max-h-40 transition-all duration-300 motion-reduce:transition-none">
         <p className="text-sm text-muted-foreground mt-3 line-clamp-2">
           {experience.description}
         </p>
         <div className="flex items-center gap-2 mt-3 text-xs text-primary">
           <span>Click to view details</span>
-          <motion.span
-            animate={{ x: [0, 4, 0] }}
-            transition={{ repeat: Infinity, duration: 1.5 }}
-          >
-            →
-          </motion.span>
+          <span aria-hidden="true">→</span>
         </div>
-      </motion.div>
+      </div>
     </motion.div>
   );
 };
