@@ -6,6 +6,12 @@ import Footer from "@/components/Footer";
 import ScrollSpy from "@/components/ScrollSpy";
 import ReadingProgress from "@/components/ReadingProgress";
 
+const homeSections = [
+  { id: "hero", label: "Home" },
+  { id: "work", label: "Work" },
+  { id: "about", label: "About" },
+];
+
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
@@ -17,7 +23,7 @@ const Index = () => {
       </a>
       <Navigation />
       <ReadingProgress />
-      <ScrollSpy />
+      <ScrollSpy sections={homeSections} />
       <main id="main-content">
         <Hero />
         <WorkSection />

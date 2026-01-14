@@ -3,47 +3,57 @@ import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import { ArrowLeft, Download, ExternalLink } from "lucide-react";
 import { useEffect } from "react";
+import resumePdf from "@/assets/Sophia_Fu_Resume.pdf";
 
 const experiences = [
   {
-    title: "Senior Developer",
-    company: "Acme Studios",
-    period: "2021—Present",
-    description: "Leading frontend architecture and mentoring a team of 5 developers. Spearheading the migration to modern React patterns and implementing design systems.",
+    title: "Software Engineer Intern",
+    company: "L3Harris Technologies",
+    period: "May – August 2025",
+    description: "Optimized C++ driver-level caching mechanisms to reduce Web GUI update latency from ~3 seconds to near-instantaneous for satellite communication components (power amplifiers, modems, beacon receivers) within a Linux environment.",
     achievements: [
-      "Reduced bundle size by 40% through code splitting",
-      "Implemented CI/CD pipeline reducing deploy time by 60%",
-      "Led accessibility initiative achieving WCAG 2.1 AA compliance",
+      "Reduced Web GUI update latency from ~3 seconds to near-instantaneous",
+      "Extended driver functionality by implementing thread-safe getter and setter interfaces",
+      "Enabled greater flexibility and modular access to hardware data",
     ],
   },
   {
-    title: "Full-Stack Developer",
-    company: "StartupXYZ",
-    period: "2018—2021",
-    description: "Built and scaled the core product from MVP to serving 100k+ users.",
+    title: "Undergraduate Research Assistant",
+    company: "The Brain ImPACT Lab",
+    period: "September 2024 – Present",
+    description: "Collaborate with researchers in incorporating data management and applying computational modeling of the brain using R.",
     achievements: [
-      "Architected real-time collaboration features",
-      "Optimized database queries improving response time by 3x",
-      "Integrated payment processing handling $2M+ annually",
+      "Aggregated 6000+ data points for TBI clinical trials",
+      "Wrote 50+ detailed reports following each session for 12-weeks",
     ],
   },
   {
-    title: "Junior Developer",
-    company: "Digital Agency Co",
-    period: "2016—2018",
-    description: "Developed responsive websites and web applications for diverse clients.",
+    title: "Software Developer",
+    company: "NUROVER",
+    period: "September 2024 – Present",
+    description: "Implemented interactive UI elements (buttons, LED Matrix) that publish messages to ROS 2 topics, controlling robot behavior and expanding range of customizable behaviors.",
     achievements: [
-      "Delivered 20+ client projects on time and budget",
-      "Introduced component-based architecture to the team",
-      "Built internal tools that saved 10 hours/week",
+      "Conducted system integration tests using ROS 2 bring-up",
+      "Validated and ensured reliability of multi-node communication",
+    ],
+  },
+  {
+    title: "President",
+    company: "Northeastern Computer Science Mentoring Organization",
+    period: "February 2024 – Present",
+    description: "Designed and deployed a real-time application using Socket.IO, Node.js, React, and React Native for a submission and voting system for a hackathon ideation event.",
+    achievements: [
+      "Increased organizational visibility by delivering communications to 1000+ students",
+      "Improved club engagement by 750% within 6 months",
+      "Conducted campus-wide promotional activities",
     ],
   },
 ];
 
 const skills = {
-  "Languages": ["TypeScript", "JavaScript", "Python", "SQL", "HTML/CSS"],
-  "Frameworks": ["React", "Node.js", "Next.js", "Express", "Django"],
-  "Tools": ["Git", "Docker", "AWS", "PostgreSQL", "Redis", "Figma"],
+  "Languages": ["JavaScript", "TypeScript", "Java", "Python", "C", "C++", "HTML", "CSS", "SQL", "R", "DrRacket"],
+  "Frameworks & Libraries": ["React", "Express.js", "Node.js", "Flask", "Tailwind CSS", "NumPy", "pandas", "Matplotlib"],
+  "Technologies & Tools": ["MongoDB", "Docker", "MySQL", "Supabase", "Git", "npm/Yarn", "Jupyter Notebook", "JUnit", "LaTeX"],
 };
 
 const Resume = () => {
@@ -118,21 +128,21 @@ const Resume = () => {
             className="mt-8 mb-16"
           >
             <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">
-              John Doe
+              Sophia Fu
             </h1>
             <p className="text-xl text-muted-foreground mb-6">
-              Senior Software Developer
+              Software Developer
             </p>
             <div className="flex flex-wrap gap-4">
               <a
-                href="mailto:hello@johndoe.com"
+                href="mailto:fu.so@northeastern.edu"
                 className="text-sm text-primary hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm"
               >
-                hello@johndoe.com
+                fu.so@northeastern.edu
               </a>
               <span className="text-muted-foreground" aria-hidden="true">•</span>
               <a
-                href="https://github.com/johndoe"
+                href="https://github.com/sf0628"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-primary transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm"
@@ -142,7 +152,7 @@ const Resume = () => {
               </a>
               <span className="text-muted-foreground" aria-hidden="true">•</span>
               <a
-                href="https://linkedin.com/in/johndoe"
+                href="https://linkedin.com/in/fusophia"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-primary transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm"
@@ -155,6 +165,14 @@ const Resume = () => {
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
+              onClick={() => {
+                const link = document.createElement("a");
+                link.href = resumePdf;
+                link.download = "Sophia_Fu_Resume.pdf";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+              }}
               className="mt-8 inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium transition-colors hover:bg-primary/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               aria-label="Download resume as PDF"
             >
@@ -213,7 +231,7 @@ const Resume = () => {
             <h2 id="skills-heading" className="font-display text-2xl font-bold text-foreground mb-8">
               Skills
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-3 md:grid-cols-3 gap-8">
               {Object.entries(skills).map(([category, items], index) => (
                 <motion.div
                   key={category}
@@ -244,10 +262,15 @@ const Resume = () => {
             </h2>
             <article className="border-l-2 border-border pl-6 py-2">
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-1 mb-2">
-                <h3 className="font-display font-semibold text-foreground">B.S. Computer Science</h3>
-                <span className="text-sm text-muted-foreground font-mono">2012—2016</span>
+                <h3 className="font-display font-semibold text-foreground">Bachelor of Science in Computer Science, Minor in Computational Social Science</h3>
+                <span className="text-sm text-muted-foreground font-mono">Expected May 2027</span>
               </div>
-              <p className="text-primary">University of Technology</p>
+              <p className="text-primary mb-2">Northeastern University - Khoury College of Computer Sciences</p>
+              <p className="text-muted-foreground text-sm mb-3">Boston, MA</p>
+              <div className="mt-3">
+                <p className="text-sm font-semibold text-foreground mb-2">Honors & Awards:</p>
+                <p className="text-sm text-muted-foreground">FinHacks 1st Place (2025), Dean's List (2025, 2024, 2023), PVSA Gold (2022, 2021)</p>
+              </div>
             </article>
           </motion.section>
 

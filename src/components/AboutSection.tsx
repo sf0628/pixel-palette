@@ -9,14 +9,21 @@ import {
 } from "@/components/ui/dialog";
 
 const skills = [
+  "JavaScript",
   "TypeScript",
+  "Java",
+  "Python",
+  "C",
+  "C++",
   "React",
   "Node.js",
-  "Python",
-  "PostgreSQL",
-  "AWS",
-  "Figma",
-  "WebGL",
+  "Express.js",
+  "Flask",
+  "MongoDB",
+  "MySQL",
+  "Supabase",
+  "Docker",
+  "Git",
 ];
 
 interface Experience {
@@ -30,43 +37,54 @@ interface Experience {
 
 const experiences: Experience[] = [
   {
-    title: "Senior Developer",
-    company: "Acme Studios",
-    period: "2021—Present",
+    title: "Software Engineer Intern",
+    company: "L3Harris Technologies",
+    period: "May – August 2025",
     description:
-      "Leading frontend architecture and mentoring a team of 5 developers. Spearheading the migration to modern React patterns and implementing design systems.",
+      "Optimized C++ driver-level caching mechanisms to reduce Web GUI update latency from ~3 seconds to near-instantaneous for satellite communication components (power amplifiers, modems, beacon receivers) within a Linux environment.",
     achievements: [
-      "Reduced bundle size by 40% through code splitting",
-      "Implemented CI/CD pipeline reducing deploy time by 60%",
-      "Led accessibility initiative achieving WCAG 2.1 AA compliance",
+      "Reduced Web GUI update latency from ~3 seconds to near-instantaneous",
+      "Extended driver functionality by implementing thread-safe getter and setter interfaces",
+      "Enabled greater flexibility and modular access to hardware data",
     ],
-    technologies: ["React", "TypeScript", "GraphQL", "AWS"],
+    technologies: ["C++", "Linux"],
   },
   {
-    title: "Full-Stack Developer",
-    company: "StartupXYZ",
-    period: "2018—2021",
+    title: "Undergraduate Research Assistant",
+    company: "The Brain ImPACT Lab",
+    period: "September 2024 – Present",
     description:
-      "Built and scaled the core product from MVP to serving 100k+ users. Owned the entire technical stack from database design to frontend implementation.",
+      "Collaborate with researchers in incorporating data management and applying computational modeling of the brain using R.",
     achievements: [
-      "Architected real-time collaboration features",
-      "Optimized database queries improving response time by 3x",
-      "Integrated payment processing handling $2M+ annually",
+      "Aggregated 6000+ data points for TBI clinical trials",
+      "Wrote 50+ detailed reports following each session for 12-weeks",
     ],
-    technologies: ["Node.js", "React", "PostgreSQL", "Redis"],
+    technologies: ["R"],
   },
   {
-    title: "Junior Developer",
-    company: "Digital Agency Co",
-    period: "2016—2018",
+    title: "Software Developer",
+    company: "NUROVER",
+    period: "September 2024 – Present",
     description:
-      "Developed responsive websites and web applications for diverse clients across industries. Collaborated closely with designers to implement pixel-perfect interfaces.",
+      "Implemented interactive UI elements (buttons, LED Matrix) that publish messages to ROS 2 topics, controlling robot behavior and expanding range of customizable behaviors.",
     achievements: [
-      "Delivered 20+ client projects on time and budget",
-      "Introduced component-based architecture to the team",
-      "Built internal tools that saved 10 hours/week",
+      "Conducted system integration tests using ROS 2 bring-up",
+      "Validated and ensured reliability of multi-node communication",
     ],
-    technologies: ["JavaScript", "React", "SASS", "WordPress"],
+    technologies: ["ROS 2"],
+  },
+  {
+    title: "President",
+    company: "Northeastern Computer Science Mentoring Organization",
+    period: "February 2024 – Present",
+    description:
+      "Designed and deployed a real-time application using Socket.IO, Node.js, React, and React Native for a submission and voting system for a hackathon ideation event.",
+    achievements: [
+      "Increased organizational visibility by delivering communications to 1000+ students",
+      "Improved club engagement by 750% within 6 months",
+      "Conducted campus-wide promotional activities",
+    ],
+    technologies: ["Socket.IO", "Node.js", "React", "React Native"],
   },
 ];
 
@@ -143,7 +161,7 @@ const AboutSection = () => {
 
   return (
     <section id="about" className="py-32 px-6 md:px-12 lg:px-20 bg-card">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -162,17 +180,20 @@ const AboutSection = () => {
             
             <div className="space-y-6 text-muted-foreground leading-relaxed">
               <p>
-                I'm a software developer with 7+ years of experience building 
-                products that matter. My approach combines technical excellence 
-                with an eye for design—every line of code serves a purpose.
+                I'm a Computer Science student at Northeastern University with a passion for 
+                building impactful software solutions. My approach combines technical excellence 
+                with collaborative problem-solving—every line of code serves a purpose.
               </p>
               <p>
-                When I'm not coding, I explore abstract art and digital 
-                illustration. This creative practice informs my development work, 
+                Currently pursuing a Bachelor of Science in Computer Science with a Minor in 
+                Computational Social Science, expected to graduate in May 2027. I've been 
+                recognized with honors including FinHacks 1st Place (2025), Dean's List 
+                (2025, 2024, 2023), and PVSA Gold (2022, 2021).
+              </p>
+              <p>
+                When I'm not coding, I explore creative projects and contribute to research 
+                in computational modeling. This diverse experience informs my development work, 
                 bringing a unique perspective to problem-solving.
-              </p>
-              <p>
-                Currently open to full-time roles and select freelance projects.
               </p>
             </div>
           </motion.div>

@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { Award, Gavel } from "lucide-react";
 
 interface ArtPieceProps {
   title: string;
@@ -7,9 +8,14 @@ interface ArtPieceProps {
   medium: string;
   image: string;
   index: number;
+  award?: string;
+  auction?: {
+    event: string;
+    finalBid: string;
+  };
 }
 
-const ArtPiece = ({ title, year, medium, image, index }: ArtPieceProps) => {
+const ArtPiece = ({ title, year, medium, image, index, award, auction }: ArtPieceProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -37,22 +43,42 @@ const ArtPiece = ({ title, year, medium, image, index }: ArtPieceProps) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: isHovered ? 1 : 0 }}
           transition={{ duration: 0.3 }}
-          className="absolute inset-0 bg-gradient-to-t from-charcoal/80 via-transparent to-transparent flex items-end p-6"
+          className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent flex items-end p-6"
         >
           <div>
-            <h3 className="font-display text-xl font-semibold text-cream mb-1">
+            <h3 className="font-display text-xl font-semibold text-foreground mb-1">
               {title}
             </h3>
-            <p className="text-cream/70 text-sm">
+            <p className="text-muted-foreground text-sm">
               {medium} • {year}
             </p>
           </div>
         </motion.div>
       </div>
 
-      <div className="mt-4 md:hidden">
-        <h3 className="font-display font-semibold text-foreground">{title}</h3>
-        <p className="text-sm text-muted-foreground">{medium} • {year}</p>
+      <div className="mt-4">
+        <h3 className="font-display font-semibold text-foreground mb-1">{title}</h3>
+        <p className="text-sm text-muted-foreground mb-2">{medium} • {year}</p>
+        
+        {/* Optional Metadata */}
+        {(award || auction) && (
+          <div className="space-y-1.5 mt-3 pt-3 border-t border-border">
+            {award && (
+              <div className="flex items-start gap-2 text-xs text-muted-foreground">
+                <Award className="w-3.5 h-3.5 mt-0.5 text-primary flex-shrink-0" aria-hidden="true" />
+                <span>{award}</span>
+              </div>
+            )}
+            {auction && (
+              <div className="flex items-start gap-2 text-xs text-muted-foreground">
+                <Gavel className="w-3.5 h-3.5 mt-0.5 text-primary flex-shrink-0" aria-hidden="true" />
+                <span>
+                  {auction.event}, Final Bid: {auction.finalBid}
+                </span>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </motion.article>
   );

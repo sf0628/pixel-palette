@@ -23,7 +23,7 @@ const Footer = () => {
 
           <div className="flex flex-col md:items-end gap-6">
             <a 
-              href="mailto:hello@jordandavis.dev"
+              href="mailto:fu.so@northeastern.edu"
               className="inline-flex items-center gap-2 px-6 py-3 font-display text-sm font-medium bg-foreground text-background rounded-full hover:bg-primary transition-colors duration-300"
             >
               Get in touch
@@ -45,9 +45,9 @@ const Footer = () => {
         </motion.div>
 
         <div className="mt-20 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4">
-          <span className="font-display text-xl font-semibold text-foreground">JD.</span>
+          <span className="font-display text-xl font-semibold text-foreground">SF</span>
           <span className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Jordan Davis. All rights reserved.
+            © {new Date().getFullYear()} Sophia Fu. All rights reserved.
           </span>
         </div>
       </div>

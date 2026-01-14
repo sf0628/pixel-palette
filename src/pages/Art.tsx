@@ -15,6 +15,7 @@ const artworks = [
     year: "2024",
     medium: "Acrylic on Canvas",
     image: "https://images.unsplash.com/photo-1549887534-1541e9326642?w=600&h=800&fit=crop",
+    award: "Best in Show — Regional Art Competition (2024)",
   },
   {
     title: "Dissolution",
@@ -33,12 +34,17 @@ const artworks = [
     year: "2023",
     medium: "Oil on Canvas",
     image: "https://images.unsplash.com/photo-1547891654-e66ed7ebb968?w=600&h=800&fit=crop",
+    auction: {
+      event: "Annual Student Art Auction",
+      finalBid: "$2,400",
+    },
   },
   {
     title: "Liminal Space",
     year: "2022",
     medium: "Digital Collage",
     image: "https://images.unsplash.com/photo-1482160549825-59d1b23cb208?w=600&h=800&fit=crop",
+    award: "Honorable Mention — Digital Arts Exhibition (2022)",
   },
 ];
 
@@ -48,7 +54,7 @@ const Art = () => {
       <Navigation />
       
       <main className="pt-32 pb-20 px-6 md:px-12 lg:px-20">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -63,10 +69,16 @@ const Art = () => {
               <br />
               <span className="text-primary">Explorations</span>
             </h1>
-            <p className="mt-6 text-lg text-muted-foreground max-w-xl">
-              A collection of personal artwork exploring abstraction, color theory, 
-              and the intersection of digital and traditional mediums.
-            </p>
+            
+            {/* Biographic Blurb */}
+            <div className="mt-8 max-w-2xl">
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                Art has been a long-standing creative practice alongside my work in software engineering, 
+                including years of competitive participation and formal recognition. While no longer pursuing 
+                it professionally, I continue creating as a way to explore form, storytelling, and visual 
+                problem-solving—skills that inform my approach to design and user experience in software development.
+              </p>
+            </div>
           </motion.div>
 
           <motion.div
@@ -83,27 +95,10 @@ const Art = () => {
                 medium={artwork.medium}
                 image={artwork.image}
                 index={index}
+                award={artwork.award}
+                auction={artwork.auction}
               />
             ))}
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="mt-24 text-center"
-          >
-            <p className="text-muted-foreground mb-4">
-              Interested in a piece or commissioning work?
-            </p>
-            <a 
-              href="mailto:hello@jordandavis.dev?subject=Art Inquiry"
-              className="inline-flex items-center gap-2 px-6 py-3 font-display text-sm font-medium bg-foreground text-background rounded-full hover:bg-primary transition-colors duration-300"
-            >
-              Get in touch
-              <span className="text-lg">→</span>
-            </a>
           </motion.div>
         </div>
       </main>

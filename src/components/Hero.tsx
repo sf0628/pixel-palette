@@ -8,7 +8,7 @@ const Hero = () => {
 
   return (
     <section id="hero" className="min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-20 pt-24">
-      <div className="max-w-7xl mx-auto w-full">
+      <div className="max-w-6xl mx-auto w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
           <div className="lg:col-span-8">
             <motion.p
@@ -17,18 +17,17 @@ const Hero = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-muted-foreground font-display text-sm tracking-widest uppercase mb-4"
             >
-              Software Developer & Artist
+              Software Developer 
             </motion.p>
             
             <motion.h1
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="font-display text-5xl md:text-7xl lg:text-8xl font-bold leading-[0.9] tracking-tight text-foreground"
+              className="font-display text-7xl md:text-8xl lg:text-7xl font-bold leading-[0.9] tracking-tight text-foreground"
             >
-              Jordan
+              Sophia Fu
               <br />
-              <span className="text-primary">Davis</span>
             </motion.h1>
 
             <motion.p
@@ -38,7 +37,7 @@ const Hero = () => {
               className="mt-8 text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed"
             >
               Crafting elegant digital experiences through clean code and thoughtful design. 
-              Based in Brooklyn, available worldwide.
+              Based in Boston, available worldwide.
             </motion.p>
           </div>
 
@@ -50,13 +49,13 @@ const Hero = () => {
           >
             <div className="flex flex-col gap-4 text-sm font-display">
               <a 
-                href="mailto:hello@jordandavis.dev" 
+                href="mailto:fu.so@northeastern.edu" 
                 className="link-underline text-muted-foreground hover:text-foreground transition-colors"
               >
-                hello@jordandavis.dev
+                fu.so@northeastern.edu
               </a>
               <a 
-                href="https://github.com" 
+                href="https://github.com/sf0628" 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="link-underline text-muted-foreground hover:text-foreground transition-colors"
@@ -64,7 +63,7 @@ const Hero = () => {
                 GitHub
               </a>
               <a 
-                href="https://linkedin.com" 
+                href="https://www.linkedin.com/in/fusophia/" 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="link-underline text-muted-foreground hover:text-foreground transition-colors"
