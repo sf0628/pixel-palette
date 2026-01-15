@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, Play, X } from "lucide-react";
+import { ArrowUpRight, X } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Project } from "@/data/projects";
@@ -15,6 +15,7 @@ interface ProjectCardProps {
 const ProjectCard = ({ project, index, isExpanded = false, onExpand, onCollapse }: ProjectCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const [imageError, setImageError] = useState(false);
+  const [tagsExpanded, setTagsExpanded] = useState(false);
 
   const handleImageError = () => {
     setImageError(true);
@@ -124,46 +125,22 @@ const ProjectCard = ({ project, index, isExpanded = false, onExpand, onCollapse 
               src={isHovered && project.gifPreview ? project.gifPreview : project.thumbnail}
               alt={project.title}
               className="w-full h-full object-cover"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
+              initial={{ opacity: 0, x: 8 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -8 }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
               onError={handleImageError}
             />
           ) : (
-            <div className="w-full h-full bg-gradient-to-br from-muted to-secondary flex items-center justify-center">
-              <span className="font-display text-6xl text-muted-foreground/30 font-bold">
-                {String(index + 1).padStart(2, '0')}
-              </span>
-            </div>
+            <div className="w-full h-full bg-gradient-to-br from-muted to-secondary" />
           )}
         </AnimatePresence>
 
         <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/5 transition-colors duration-500" />
 
-        {/* Preview Button Overlay */}
-        <motion.button
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: isHovered ? 1 : 0, scale: isHovered ? 1 : 0.8 }}
-          transition={{ duration: 0.2 }}
-          onClick={(e) => {
-            e.stopPropagation();
-            onExpand?.();
-          }}
-          className="absolute inset-0 flex items-center justify-center bg-foreground/20 backdrop-blur-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-          aria-label={`Preview ${project.title}`}
-        >
-          <div className="flex flex-col items-center gap-2">
-            <div className="w-16 h-16 rounded-full bg-primary flex items-center justify-center">
-              <Play className="w-8 h-8 text-primary-foreground ml-1" />
-            </div>
-            <span className="text-sm font-medium text-foreground">Preview</span>
-          </div>
-        </motion.button>
-
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          whileHover={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0 }}
+          whileHover={{ opacity: 1 }}
           className="absolute top-4 right-4 w-10 h-10 rounded-full bg-primary flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
         >
           <ArrowUpRight className="w-5 h-5 text-primary-foreground" />
@@ -184,7 +161,7 @@ const ProjectCard = ({ project, index, isExpanded = false, onExpand, onCollapse 
       </p>
 
       <div className="flex flex-wrap gap-2">
-        {project.tags.slice(0, 4).map((tag) => (
+        {(tagsExpanded ? project.tags : project.tags.slice(0, 4)).map((tag) => (
           <span
             key={tag}
             className="px-3 py-1 text-xs font-display tracking-wide text-muted-foreground bg-secondary rounded-full"
@@ -192,10 +169,30 @@ const ProjectCard = ({ project, index, isExpanded = false, onExpand, onCollapse 
             {tag}
           </span>
         ))}
-        {project.tags.length > 4 && (
-          <span className="px-3 py-1 text-xs font-display tracking-wide text-muted-foreground bg-secondary rounded-full">
+        {project.tags.length > 4 && !tagsExpanded && (
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setTagsExpanded(true);
+            }}
+            className="px-3 py-1 text-xs font-display tracking-wide text-muted-foreground bg-secondary rounded-full hover:bg-secondary/80 transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          >
             +{project.tags.length - 4}
-          </span>
+          </button>
+        )}
+        {project.tags.length > 4 && tagsExpanded && (
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setTagsExpanded(false);
+            }}
+            className="px-3 py-1 text-xs font-display tracking-wide text-muted-foreground bg-secondary rounded-full hover:bg-secondary/80 transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            aria-label="Collapse tags"
+          >
+            -
+          </button>
         )}
       </div>
     </motion.article>

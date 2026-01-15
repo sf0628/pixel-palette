@@ -89,7 +89,7 @@ const Resume = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-card">
       <Navigation />
       
       {/* Reading Progress Indicator */}
@@ -116,7 +116,7 @@ const Resume = () => {
               className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm"
             >
               <ArrowLeft className="w-4 h-4" aria-hidden="true" />
-              <span>Back to Portfolio</span>
+              <span>back to portfolio</span>
             </Link>
           </motion.div>
 

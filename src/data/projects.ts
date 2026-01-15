@@ -74,6 +74,170 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    id: "prosperous",
+    title: "ProsperouSSS",
+    shortDescription: "Financial digital twin software built for Finhacks 2025. Won 1st place & $1000.",
+    fullDescription: "Financial digital twin software that creates personalized financial personas using demographic data and LLM-powered predictions. Built advanced visualizations for spending, earning, and portfolio analysis. Integrated GPT-4o for natural language demographic fetching and spending predictions. Implemented \"what if\" scenario modeling and correlation insights. Built comprehensive reporting system with PDF and JSON export/import capabilities.",
+    thumbnail: "/placeholder-prosperous-thumb.jpg",
+    gifPreview: "/placeholder-prosperous-preview.gif",
+    tags: ["Next.js", "TypeScript", "TailwindCSS", "Shadcn/UI", "Plotly Dash", "GPT-4o", "Framer Motion"],
+    role: "Full-Stack Developer",
+    scope: "Hackathon project - Full-stack web application",
+    highlights: [
+      "Won 1st place & $1000 at Finhacks 2025",
+      "LLM-powered demographic data fetching and predictions",
+      "Advanced financial visualizations and analytics",
+      "Comprehensive scenario modeling and insights"
+    ],
+    valueProposition: "Empower businesses and individuals with AI-powered financial insights through personalized digital twins.",
+    problemStatement: "Businesses and organizations need better understanding of target demographics and their financial behaviors, but lack the data and tools to create comprehensive financial personas and analyze scenarios.",
+    targetUsers: "Marketers, bankers, fintech companies, advertisers, real estate agents, governments, and small businesses seeking demographic financial insights",
+    successCriteria: [
+      "Generate accurate digital twins from demographic input",
+      "Provide meaningful financial predictions and visualizations",
+      "Enable effective scenario modeling and analysis",
+      "Deliver comprehensive reports in multiple formats"
+    ],
+    constraints: [
+      "Time: Hackathon timeframe (limited development window)",
+      "Tech: Modern web stack with AI integration",
+      "Data: Integration with demographic and financial APIs",
+      "Performance: Real-time LLM API calls and visualizations"
+    ],
+    research: {
+      keyInsights: [
+        "Natural language input improves accessibility for non-technical users",
+        "Visualizations are essential for understanding complex financial data",
+        "Scenario modeling provides actionable insights for decision-making"
+      ],
+      ideasExplored: [
+        "Real-time data streaming (deferred: hackathon scope)",
+        "Mobile app version (future consideration)",
+        "Advanced ML models (enhanced post-hackathon)"
+      ]
+    },
+    design: {
+      uxConsiderations: [
+        "Natural language input for demographic queries",
+        "Interactive visualizations for financial data exploration",
+        "Clear scenario modeling interface"
+      ],
+      visualDecisions: [
+        "Modern, clean interface with financial data visualization focus",
+        "Dark mode support for extended use",
+        "Responsive design for various screen sizes"
+      ]
+    },
+    technicalArchitecture: {
+      stackRationale: "Next.js for full-stack React development, TypeScript for type safety, GPT-4o for AI capabilities, Plotly Dash for advanced visualizations, Shadcn/UI for consistent design system.",
+      systemOverview: "Next.js application with API routes for LLM integration, client-side visualization components, and report generation system.",
+      apiDesign: "RESTful API routes for demographic fetching, digital twin generation, and report export/import functionality."
+    },
+    implementation: {
+      keyFeatures: [
+        {
+          title: "LLM-Powered Demographic Fetching",
+          description: "Integrated GPT-4o to fetch demographic information using natural language input, enabling non-technical users to create digital twins easily.",
+          technicalDetails: "OpenAI API integration with prompt engineering for reliable demographic data extraction and formatting."
+        },
+        {
+          title: "Financial Visualizations",
+          description: "Built comprehensive visualizations using Plotly Dash for spending, earning, portfolio analysis, and comparison views.",
+          technicalDetails: "Plotly Dash integration with React components, dynamic data binding, and interactive chart configurations."
+        },
+        {
+          title: "Scenario Modeling System",
+          description: "Implemented \"what if\" scenario modeling allowing users to tweak market conditions, demographics, and financial parameters to see predicted outcomes.",
+          technicalDetails: "State management for scenario parameters, predictive algorithms based on demographic and financial data, real-time visualization updates."
+        },
+        {
+          title: "Report Generation",
+          description: "Built comprehensive reporting system with PDF generation and JSON export/import for easy sharing and collaboration.",
+          technicalDetails: "PDF generation library integration, JSON serialization/deserialization, import validation and error handling."
+        }
+      ],
+      stateManagement: "React state management with context API for global application state, local state for component interactions.",
+      performanceConsiderations: [
+        "Optimized LLM API calls with caching where appropriate",
+        "Lazy loading for large visualization components",
+        "Efficient data processing for scenario calculations"
+      ],
+      edgeCases: [
+        "Handling LLM API failures and timeouts",
+        "Invalid demographic input validation",
+        "Large dataset visualization performance"
+      ]
+    },
+    challenges: {
+      technical: [
+        "Integrating multiple APIs (demographic, financial, LLM) within hackathon timeframe",
+        "Optimizing LLM API calls for performance and cost",
+        "Creating responsive visualizations with large datasets"
+      ],
+      design: [
+        "Balancing feature richness with hackathon time constraints",
+        "Creating intuitive interfaces for complex financial concepts"
+      ],
+      tradeoffs: [
+        {
+          decision: "Comprehensive features vs. polish",
+          rationale: "Focused on core functionality and key features to deliver a complete product within hackathon constraints, prioritizing feature breadth over deep polish."
+        }
+      ]
+    },
+    results: {
+      metrics: [
+        "Won 1st place at Finhacks 2025",
+        "Received $1000 prize",
+        "Successfully demonstrated all core features"
+      ],
+      outcomes: [
+        "Validated concept with judges and audience",
+        "Demonstrated full-stack development capabilities",
+        "Showcased AI integration and data visualization skills"
+      ],
+      technicalDemonstration: [
+        "Full-stack Next.js development",
+        "LLM API integration and prompt engineering",
+        "Advanced data visualization techniques",
+        "Complex state management and scenario modeling",
+        "Report generation and data export/import"
+      ]
+    },
+    lessonsLearned: {
+      skillsDeveloped: [
+        "LLM API integration and prompt engineering",
+        "Advanced data visualization with Plotly Dash",
+        "Rapid prototyping in hackathon environment",
+        "Next.js full-stack development",
+        "Financial data modeling and analysis"
+      ],
+      whatWouldChange: [
+        "Implement more robust error handling for API failures",
+        "Add comprehensive testing suite",
+        "Enhance visualization performance optimizations",
+        "Expand scenario modeling capabilities"
+      ]
+    },
+    nextSteps: {
+      plannedFeatures: [
+        "Persona generation with detailed life stories",
+        "Enhanced ML models for more accurate predictions",
+        "Real-time data streaming capabilities",
+        "Mobile app version"
+      ],
+      learningGoals: [
+        "Explore advanced financial modeling techniques",
+        "Learn more about LLM fine-tuning for domain-specific tasks",
+        "Study advanced data visualization patterns",
+        "Improve API integration and error handling strategies"
+      ]
+    },
+    links: {
+      github: "https://github.com/Tetraslam/finhacks"
+    }
+  },
+  {
     id: "wardrobe-wizard",
     title: "Wardrobe Wizard",
     shortDescription: "A full-stack web application that virtualizes and curates your wardrobe with intelligent recommendations.",

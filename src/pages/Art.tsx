@@ -50,7 +50,7 @@ const artworks = [
 
 const Art = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-card">
       <Navigation />
       
       <main className="pt-32 pb-20 px-6 md:px-12 lg:px-20">

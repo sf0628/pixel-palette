@@ -1,6 +1,18 @@
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en">
   <head>
+    <script>
+      // Apply theme from localStorage before first render to prevent flickering
+      (function() {
+        const theme = localStorage.getItem('theme');
+        const isDark = theme === 'dark' || (theme === null); // default to dark if no preference
+        if (isDark) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      })();
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sophia Fu | Software Developer </title>

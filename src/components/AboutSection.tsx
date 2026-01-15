@@ -1,5 +1,6 @@
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef, useState } from "react";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
+import { X, Plus } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -25,6 +26,43 @@ const skills = [
   "Docker",
   "Git",
 ];
+
+const expandedTechnologies = {
+  "Programming Languages": [
+    "JavaScript",
+    "TypeScript",
+    "Java",
+    "Python",
+    "C",
+    "C++",
+    "HTML",
+    "CSS",
+    "SQL",
+    "R",
+    "DrRacket",
+  ],
+  "Frameworks & Libraries": [
+    "React",
+    "Node.js",
+    "Express.js",
+    "Flask",
+    "Tailwind CSS",
+    "NumPy",
+    "pandas",
+    "Matplotlib",
+  ],
+  "Tools & Platforms": [
+    "MongoDB",
+    "MySQL",
+    "Supabase",
+    "Docker",
+    "Git",
+    "npm/Yarn",
+    "Jupyter Notebook",
+    "JUnit",
+    "LaTeX",
+  ],
+};
 
 interface Experience {
   title: string;
@@ -92,10 +130,16 @@ const ExperienceCard = ({
   experience,
   index,
   onSelect,
+  isHovered,
+  onMouseEnter,
+  onMouseLeave,
 }: {
   experience: Experience;
   index: number;
   onSelect: () => void;
+  isHovered: boolean;
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -121,17 +165,27 @@ const ExperienceCard = ({
       style={{ opacity, x, scale }}
       onClick={onSelect}
       onKeyDown={handleKeyDown}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      onFocus={onMouseEnter}
+      onBlur={onMouseLeave}
       tabIndex={0}
       role="button"
       aria-label={`View details for ${experience.title} at ${experience.company}`}
-      className="group relative p-6 rounded-lg border border-border cursor-pointer transition-colors hover:border-primary/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background motion-reduce:transition-none motion-reduce:transform-none"
+      className={`group relative p-6 rounded-lg border cursor-pointer transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background motion-reduce:transition-none motion-reduce:transform-none ${
+        isHovered ? "border-primary/50" : "border-border"
+      }`}
     >
       {/* Timeline connector */}
-      <div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-primary to-transparent -translate-x-8 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity motion-reduce:transition-none" />
+      <div className={`absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-primary to-transparent -translate-x-8 transition-opacity motion-reduce:transition-none ${
+        isHovered ? "opacity-100" : "opacity-0"
+      }`} />
 
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
         <div className="space-y-1">
-          <p className="font-display font-medium text-foreground group-hover:text-primary group-focus-visible:text-primary transition-colors motion-reduce:transition-none">
+          <p className={`font-display font-medium transition-colors motion-reduce:transition-none ${
+            isHovered ? "text-primary" : "text-foreground"
+          }`}>
             {experience.title}
           </p>
           <p className="text-sm text-muted-foreground">{experience.company}</p>
@@ -141,23 +195,83 @@ const ExperienceCard = ({
         </span>
       </div>
 
-      {/* Preview hint */}
-      <div className="overflow-hidden max-h-0 group-hover:max-h-40 group-focus-visible:max-h-40 transition-all duration-300 motion-reduce:transition-none">
-        <p className="text-sm text-muted-foreground mt-3 line-clamp-2">
-          {experience.description}
-        </p>
-        <div className="flex items-center gap-2 mt-3 text-xs text-primary">
-          <span>Click to view details</span>
-          <span aria-hidden="true">→</span>
+      {/* Preview hint with smooth animation - always reserves minimal height */}
+      <motion.div
+        initial={false}
+        animate={{
+          maxHeight: isHovered ? 200 : 60,
+        }}
+        transition={{
+          duration: 0.3,
+          ease: "easeInOut",
+        }}
+        className="overflow-hidden"
+      >
+        <div className="pt-3">
+          <motion.p
+            initial={false}
+            animate={{
+              opacity: isHovered ? 1 : 0.4,
+            }}
+            transition={{
+              duration: 0.3,
+              ease: "easeInOut",
+            }}
+            className="text-sm text-muted-foreground"
+            style={{
+              display: "-webkit-box",
+              WebkitLineClamp: isHovered ? "none" : 2,
+              WebkitBoxOrient: "vertical",
+              overflow: "hidden",
+            }}
+          >
+            {experience.description}
+          </motion.p>
+          <motion.div
+            initial={false}
+            animate={{
+              opacity: isHovered ? 1 : 0,
+              maxHeight: isHovered ? 30 : 0,
+              marginTop: isHovered ? 12 : 0,
+            }}
+            transition={{
+              duration: 0.25,
+              ease: "easeInOut",
+            }}
+            className="flex items-center gap-2 text-xs text-primary overflow-hidden"
+          >
+            <span>Click to view details</span>
+            <span aria-hidden="true">→</span>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
     </motion.div>
   );
 };
 
 const AboutSection = () => {
   const [selectedExperience, setSelectedExperience] = useState<Experience | null>(null);
+  const [hoveredCardIndex, setHoveredCardIndex] = useState<number | null>(null);
+  const [isTechnologiesOpen, setIsTechnologiesOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const popupRef = useRef<HTMLDivElement>(null);
+
+  // Handle escape key and focus management
+  useEffect(() => {
+    if (isTechnologiesOpen) {
+      const handleEscape = (e: KeyboardEvent) => {
+        if (e.key === "Escape") {
+          setIsTechnologiesOpen(false);
+        }
+      };
+      document.addEventListener("keydown", handleEscape);
+      // Focus the popup when it opens
+      popupRef.current?.focus();
+      return () => {
+        document.removeEventListener("keydown", handleEscape);
+      };
+    }
+  }, [isTechnologiesOpen]);
 
   return (
     <section id="about" className="py-32 px-6 md:px-12 lg:px-20 bg-card">
@@ -169,16 +283,12 @@ const AboutSection = () => {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <span className="font-display text-sm tracking-widest uppercase text-muted-foreground">
-              About
+            <span className="font-display text-lg tracking-widest lowercase text-foreground mb-10">
+              About Me
             </span>
-            <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mt-2 mb-8">
-              Building with
-              <br />
-              <span className="text-primary">intention</span>
-            </h2>
             
-            <div className="space-y-6 text-muted-foreground leading-relaxed">
+            
+            <div className="space-y-6 text-muted-foreground leading-relaxed mt-10">
               <p>
                 I'm a Computer Science student at Northeastern University with a passion for 
                 building impactful software solutions. My approach combines technical excellence 
@@ -205,11 +315,11 @@ const AboutSection = () => {
             viewport={{ once: true }}
             className="lg:pt-16"
           >
-            <h3 className="font-display text-lg font-semibold text-foreground mb-6">
+            <span className="font-display text-lg tracking-widest lowercase text-foreground mb-6">
               Technologies
-            </h3>
+            </span>
             
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-3 mt-6">
               {skills.map((skill, index) => (
                 <motion.span
                   key={skill}
@@ -223,28 +333,57 @@ const AboutSection = () => {
                   {skill}
                 </motion.span>
               ))}
-            </div>
-
-            <div ref={containerRef} className="mt-12 pt-8 border-t border-border">
-              <h3 className="font-display text-lg font-semibold text-foreground mb-6">
-                Experience
-              </h3>
-              <div className="space-y-4 pl-8 relative">
-                {/* Timeline line */}
-                <div className="absolute left-0 top-0 bottom-0 w-px bg-border" />
-                
-                {experiences.map((experience, index) => (
-                  <ExperienceCard
-                    key={experience.company}
-                    experience={experience}
-                    index={index}
-                    onSelect={() => setSelectedExperience(experience)}
-                  />
-                ))}
-              </div>
+              <motion.button
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3, delay: skills.length * 0.05 }}
+                viewport={{ once: true }}
+                whileHover={{ scale: 1.05, backgroundColor: "hsl(var(--primary))", color: "hsl(var(--primary-foreground))" }}
+                onClick={() => setIsTechnologiesOpen(true)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    setIsTechnologiesOpen(true);
+                  }
+                }}
+                className="px-4 py-2 font-display text-sm text-foreground border border-border rounded-full cursor-pointer transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                aria-label="View all technologies"
+                tabIndex={0}
+              >
+                <Plus className="w-4 h-4" />
+              </motion.button>
             </div>
           </motion.div>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          viewport={{ once: true }}
+          ref={containerRef}
+          className="mt-20 pt-8 border-t border-border"
+        >
+          <span className="font-display text-lg tracking-widest lowercase text-foreground mb-6">
+            Experience
+          </span>
+          <div className="space-y-4 pl-8 relative">
+            {/* Timeline line */}
+            <div className="absolute left-0 top-0 bottom-0 w-px bg-border" />
+            
+            {experiences.map((experience, index) => (
+              <ExperienceCard
+                key={experience.company}
+                experience={experience}
+                index={index}
+                onSelect={() => setSelectedExperience(experience)}
+                isHovered={hoveredCardIndex === index}
+                onMouseEnter={() => setHoveredCardIndex(index)}
+                onMouseLeave={() => setHoveredCardIndex(null)}
+              />
+            ))}
+          </div>
+        </motion.div>
       </div>
 
       {/* Experience Detail Dialog */}
@@ -318,6 +457,99 @@ const AboutSection = () => {
           </motion.div>
         </DialogContent>
       </Dialog>
+
+      {/* Technologies Popup */}
+      {isTechnologiesOpen && (
+        <>
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 bg-background/80 backdrop-blur-sm z-[100]"
+            onClick={() => setIsTechnologiesOpen(false)}
+            aria-hidden="true"
+          />
+          
+          {/* Popup Card */}
+          <motion.div
+            ref={popupRef}
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{
+              duration: 0.3,
+              ease: "easeOut",
+            }}
+            className="fixed inset-0 z-[101] flex items-center justify-center p-4"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="technologies-title"
+            tabIndex={-1}
+          >
+              <div
+                className="relative bg-card border border-border rounded-lg shadow-lg max-w-2xl w-full max-h-[80vh] overflow-hidden"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Header */}
+                <div className="flex items-center justify-between p-6 border-b border-border">
+                  <h3
+                    id="technologies-title"
+                    className="font-display text-2xl font-semibold text-foreground"
+                  >
+                    Technologies
+                  </h3>
+                  <button
+                    onClick={() => setIsTechnologiesOpen(false)}
+                    className="p-2 rounded-full hover:bg-secondary transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                    aria-label="Close technologies popup"
+                    tabIndex={0}
+                  >
+                    <X className="w-5 h-5 text-muted-foreground" />
+                  </button>
+                </div>
+
+                {/* Content */}
+                <div className="p-6 overflow-y-auto max-h-[calc(80vh-100px)]">
+                  <div className="space-y-8">
+                    {Object.entries(expandedTechnologies).map(([category, items], categoryIndex) => (
+                      <motion.div
+                        key={category}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.3, delay: categoryIndex * 0.1 }}
+                      >
+                        <h4 className="font-display text-lg font-semibold text-foreground mb-4">
+                          {category}
+                        </h4>
+                        <div className="flex flex-wrap gap-3">
+                          {items.map((item, itemIndex) => (
+                            <motion.span
+                              key={item}
+                              initial={{ opacity: 0, scale: 0.9 }}
+                              animate={{ opacity: 1, scale: 1 }}
+                              transition={{
+                                duration: 0.2,
+                                delay: categoryIndex * 0.1 + itemIndex * 0.02,
+                              }}
+                              whileHover={{
+                                scale: 1.05,
+                                backgroundColor: "hsl(var(--primary))",
+                                color: "hsl(var(--primary-foreground))",
+                              }}
+                              className="px-4 py-2 font-display text-sm text-foreground border border-border rounded-full cursor-default transition-colors"
+                            >
+                              {item}
+                            </motion.span>
+                          ))}
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
     </section>
   );
 };

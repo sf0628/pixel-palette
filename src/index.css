@@ -79,12 +79,8 @@
     @apply border-border;
   }
 
-  html {
-    @apply dark;
-  }
-
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-card text-foreground antialiased;
     font-family: 'Inter', system-ui, sans-serif;
   }
 

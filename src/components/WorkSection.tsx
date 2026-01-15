@@ -30,9 +30,9 @@ const WorkSection = () => {
             <span className="font-display text-sm tracking-widest uppercase text-muted-foreground">
               Selected Work
             </span>
-            <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mt-2">
-              Projects
-            </h2>
+            <h3 className="font-display text-2xl lowercase md:text-3xl font-semibold text-foreground/90 mt-2">
+              Projects  
+            </h3>
           </div>
           <Link
             to="/resume"

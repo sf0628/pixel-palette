@@ -1,54 +1,30 @@
-import { motion } from "framer-motion";
+import { ArrowUp } from "lucide-react";
 
 const Footer = () => {
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  };
+
   return (
-    <footer id="contact" className="py-20 px-6 md:px-12 lg:px-20 border-t border-border">
-      <div className="max-w-7xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-12"
-        >
-          <div>
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Let's work together
-            </h2>
-            <p className="text-muted-foreground max-w-md">
-              Have a project in mind? I'd love to hear about it. 
-              Let's create something great.
-            </p>
-          </div>
-
-          <div className="flex flex-col md:items-end gap-6">
-            <a 
-              href="mailto:fu.so@northeastern.edu"
-              className="inline-flex items-center gap-2 px-6 py-3 font-display text-sm font-medium bg-foreground text-background rounded-full hover:bg-primary transition-colors duration-300"
-            >
-              Get in touch
-              <span className="text-lg">→</span>
-            </a>
-            
-            <div className="flex gap-6 text-sm text-muted-foreground">
-              <a href="https://github.com" className="link-underline hover:text-foreground transition-colors">
-                GitHub
-              </a>
-              <a href="https://linkedin.com" className="link-underline hover:text-foreground transition-colors">
-                LinkedIn
-              </a>
-              <a href="https://twitter.com" className="link-underline hover:text-foreground transition-colors">
-                Twitter
-              </a>
-            </div>
-          </div>
-        </motion.div>
-
-        <div className="mt-20 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4">
+    <footer id="contact" className="py-6 px-6 md:px-12 lg:px-20 border-t border-border bg-card">
+      <div className="max-w-6xl mx-auto">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <span className="font-display text-xl font-semibold text-foreground">SF</span>
-          <span className="text-sm text-muted-foreground">
+          <span className="text-sm text-muted-foreground order-3 md:order-2">
             © {new Date().getFullYear()} Sophia Fu. All rights reserved.
           </span>
+          <button
+            onClick={scrollToTop}
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm order-2 md:order-3"
+            aria-label="Back to top"
+          >
+            <span className="hidden sm:inline">Back to top</span>
+            <ArrowUp className="w-4 h-4" aria-hidden="true" />
+          </button>
         </div>
       </div>
     </footer>
