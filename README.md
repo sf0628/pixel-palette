@@ -1,4 +1,4 @@
-This project is built with:
+# this is my personal website
 
 - Vite
 - TypeScript
@@ -7,4 +7,4 @@ This project is built with:
 - Tailwind CSS
 
 
-[view my website!](http://sophialand.org/)
+[meow](http://sophialand.org/)
