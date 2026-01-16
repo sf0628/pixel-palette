@@ -1,7 +1,6 @@
 # SophiaLand — Personal Website
 
 Welcome to **SophiaLand** — my personal website showcasing projects, experience, and personal content.  
-Built with modern web technologies and designed for performance, maintainability, and a smooth user experience.  
 
 🌐 **Live site:** [https://sophialand.org](https://sophialand.org)
 
