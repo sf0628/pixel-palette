@@ -8,13 +8,10 @@ Welcome to **SophiaLand** — my personal website showcasing projects, experienc
 
 ## Table of Contents
 
-- [Technologies](#technologies)  
-- [Architecture & Patterns](#architecture--patterns)  
+- [Tech Stack](#technologies)  
 - [Installation & Development](#installation--development)  
-- [Available Scripts](#available-scripts)  
 - [Folder Structure](#folder-structure)  
 - [Contributing](#contributing)  
-- [License](#license)  
 
 ---
 
@@ -48,7 +45,10 @@ Start the development server:
 npm run dev
 ```
 
-Folder Structure
+---
+
+## Folder Structure
+
 ├─ public/            # Static assets
 ├─ src/
 │  ├─ components/     # Reusable UI components
