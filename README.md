@@ -1,5 +1,5 @@
 ## SophiaLand, aka sophia's personal website!
-
+--
 Welcome to **SophiaLand** — my personal website showcasing projects, experience, and personal content.  
 
 🌐 **Live site:** [https://sophialand.org](https://sophialand.org)
