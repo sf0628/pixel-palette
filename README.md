@@ -7,4 +7,4 @@
 - Tailwind CSS
 
 
-[meow](http://sophialand.org/)
+[sophialand.org](http://sophialand.org/)
