@@ -1,4 +1,4 @@
-# SophiaLand -- aka sophia's personal website hehe
+## SophiaLand, aka sophia's personal website!
 
 Welcome to **SophiaLand** — my personal website showcasing projects, experience, and personal content.  
 
