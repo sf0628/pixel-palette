@@ -290,20 +290,13 @@ const AboutSection = () => {
             
             <div className="space-y-6 text-muted-foreground leading-relaxed mt-10">
               <p>
-                I'm a Computer Science student at Northeastern University with a passion for 
-                building impactful software solutions. My approach combines technical excellence 
-                with collaborative problem-solving—every line of code serves a purpose.
+              I’m a Computer Science student at Northeastern University who enjoys building software that makes an impact. I try to combine thoughtful coding with collaborative problem-solving, making sure each project has purpose and meaning.
               </p>
               <p>
-                Currently pursuing a Bachelor of Science in Computer Science with a Minor in 
-                Computational Social Science, expected to graduate in May 2027. I've been 
-                recognized with honors including FinHacks 1st Place (2025), Dean's List 
-                (2025, 2024, 2023), and PVSA Gold (2022, 2021).
+              I’m pursuing a Bachelor of Science in Computer Science with a Minor in Computational Social Science, expecting to graduate in May 2027. Along the way, I’ve been fortunate to receive recognition such as FinHacks 1st Place (2025) and Dean’s List honors (2023–2025).
               </p>
               <p>
-                When I'm not coding, I explore creative projects and contribute to research 
-                in computational modeling. This diverse experience informs my development work, 
-                bringing a unique perspective to problem-solving.
+              Outside of coding, I enjoy taking care of my cat Pablo and finding new places to add to my travel bucket list. These experiences shape the way I approach development, helping me bring curiosity and a broader perspective to the problems I tackle.
               </p>
             </div>
           </motion.div>

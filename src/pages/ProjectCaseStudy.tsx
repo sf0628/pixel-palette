@@ -1,15 +1,69 @@
 import { motion, useScroll, useSpring, useMotionValueEvent, AnimatePresence } from "framer-motion";
-import { useParams, Link, Navigate } from "react-router-dom";
+import { useParams, Link, Navigate, useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import ScrollSpy from "@/components/ScrollSpy";
 import { ArrowLeft, ExternalLink, Github, Play, ChevronLeft, ChevronRight, ChevronUp } from "lucide-react";
 import { getProjectById, getProjectNavigation } from "@/data/projects";
 import { useEffect, useState } from "react";
 
+// Import ProsperouSSS images
+import createTwinImg from "@/assets/prosperouSSS/create_twin.png";
+import powerpointImg from "@/assets/prosperouSSS/powerpoint.png";
+import userDemographicsImg from "@/assets/prosperouSSS/user_demographics.png";
+import correlationInsightsImg from "@/assets/prosperouSSS/correlation_insights.png";
+import correlationSpendingMarketImg from "@/assets/prosperouSSS/correlation_spending_market.png";
+import whatIfScenariosImg from "@/assets/prosperouSSS/what_if_scenarios.png";
+import priceRecommendationsImg from "@/assets/prosperouSSS/price_recommenations.png";
+import exportImportImg from "@/assets/prosperouSSS/export_import.png";
+
+// Map image paths to imported images
+const prosperousImageMap: Record<string, string> = {
+  "/src/assets/prosperouSSS/create_twin.png": createTwinImg,
+  "/src/assets/prosperouSSS/powerpoint.png": powerpointImg,
+  "/src/assets/prosperouSSS/user_demographics.png": userDemographicsImg,
+  "/src/assets/prosperouSSS/correlation_insights.png": correlationInsightsImg,
+  "/src/assets/prosperouSSS/correlation_spending_market.png": correlationSpendingMarketImg,
+  "/src/assets/prosperouSSS/what_if_scenarios.png": whatIfScenariosImg,
+  "/src/assets/prosperouSSS/price_recommenations.png": priceRecommendationsImg,
+  "/src/assets/prosperouSSS/export_import.png": exportImportImg,
+};
+
+const ProjectImage = ({ src, caption }: { src: string; caption?: string }) => {
+  // Get the imported image from the map, or fallback to the original path
+  const imageSrc = prosperousImageMap[src] || src;
+  
+  return (
+    <figure className="my-6">
+      <motion.img
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.4 }}
+        src={imageSrc}
+        alt={caption || "Project image"}
+        className="w-full rounded-lg border border-border shadow-sm"
+        loading="lazy"
+      />
+      {caption && (
+        <motion.figcaption
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4, delay: 0.2 }}
+          className="mt-3 text-sm text-muted-foreground italic text-center"
+        >
+          {caption}
+        </motion.figcaption>
+      )}
+    </figure>
+  );
+};
+
 const ProjectCaseStudy = () => {
   const { id } = useParams<{ id: string }>();
   const project = id ? getProjectById(id) : undefined;
   const navigation = id ? getProjectNavigation(id) : { previous: null, next: null };
+  const navigate = useNavigate();
   const { scrollYProgress, scrollY } = useScroll();
   const [showBackToTop, setShowBackToTop] = useState(false);
   const scaleX = useSpring(scrollYProgress, {
@@ -31,6 +85,18 @@ const ProjectCaseStudy = () => {
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleBackToWork = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    navigate("/");
+    // Use setTimeout to ensure the route change completes before scrolling
+    setTimeout(() => {
+      const workSection = document.getElementById("work");
+      if (workSection) {
+        workSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }, 100);
   };
 
   if (!project) {
@@ -145,6 +211,7 @@ const ProjectCaseStudy = () => {
           >
             <Link
               to="/#work"
+              onClick={handleBackToWork}
               className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm"
               aria-label="Back to projects"
             >
@@ -161,6 +228,9 @@ const ProjectCaseStudy = () => {
             transition={{ duration: 0.6 }}
             className="mb-16 scroll-mt-32"
           >
+            {project.images?.filter(img => img.section === "overview").map((img, idx) => (
+              <ProjectImage key={idx} src={img.src} caption={img.caption} />
+            ))}
             <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">
               {project.title}
             </h1>
@@ -210,6 +280,9 @@ const ProjectCaseStudy = () => {
           {/* Problem & Goals */}
           <Section id="problem-goals" title="Problem & Goals">
             <div className="space-y-6">
+              {project.images?.filter(img => img.section === "problem-goals").map((img, idx) => (
+                <ProjectImage key={idx} src={img.src} caption={img.caption} />
+              ))}
               <div>
                 <h3 className="font-display text-xl font-semibold text-foreground mb-3">
                   Problem Statement
@@ -437,6 +510,9 @@ const ProjectCaseStudy = () => {
           {project.implementation && (
             <Section id="implementation" title="Implementation Deep Dive" delay={0.4}>
               <div className="space-y-8">
+                {project.images?.filter(img => img.section === "implementation").map((img, idx) => (
+                  <ProjectImage key={idx} src={img.src} caption={img.caption} />
+                ))}
                 <div>
                   <h3 className="font-display text-xl font-semibold text-foreground mb-6">
                     Key Features
@@ -587,6 +663,9 @@ const ProjectCaseStudy = () => {
           {project.results && (
             <Section id="results" title="Results & Impact" delay={0.6}>
               <div className="space-y-6">
+                {project.images?.filter(img => img.section === "results").map((img, idx) => (
+                  <ProjectImage key={idx} src={img.src} caption={img.caption} />
+                ))}
                 {project.results.metrics && project.results.metrics.length > 0 && (
                   <div>
                     <h3 className="font-display text-xl font-semibold text-foreground mb-3">
@@ -689,6 +768,9 @@ const ProjectCaseStudy = () => {
           {project.nextSteps && (
             <Section id="next-steps" title="Next Steps" delay={0.8}>
               <div className="space-y-6">
+                {project.images?.filter(img => img.section === "next-steps").map((img, idx) => (
+                  <ProjectImage key={idx} src={img.src} caption={img.caption} />
+                ))}
                 <div>
                   <h3 className="font-display text-xl font-semibold text-foreground mb-3">
                     Planned Features

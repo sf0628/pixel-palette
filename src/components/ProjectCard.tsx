@@ -1,8 +1,22 @@
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowUpRight, X } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Project } from "@/data/projects";
+
+// Import project thumbnails
+import prosperousTitleCard from "@/assets/prosperouSSS/title_card.png";
+import edushareTitleCard from "@/assets/edushare-hub/title_card.png";
+import stockManagerTitleCard from "@/assets/stock-manager/title_card.png";
+import wardrobeWizardTitleCard from "@/assets/wardrobe-wizard/title_card.png";
+
+// Map thumbnail paths to imported images
+const thumbnailImageMap: Record<string, string> = {
+  "/src/assets/prosperouSSS/title_card.png": prosperousTitleCard,
+  "/src/assets/edushare-hub/title_card.png": edushareTitleCard,
+  "/src/assets/stock-manager/title_card.png": stockManagerTitleCard,
+  "/src/assets/wardrobe-wizard/title_card.png": wardrobeWizardTitleCard,
+};
 
 interface ProjectCardProps {
   project: Project;
@@ -13,7 +27,6 @@ interface ProjectCardProps {
 }
 
 const ProjectCard = ({ project, index, isExpanded = false, onExpand, onCollapse }: ProjectCardProps) => {
-  const [isHovered, setIsHovered] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [tagsExpanded, setTagsExpanded] = useState(false);
 
@@ -114,38 +127,36 @@ const ProjectCard = ({ project, index, isExpanded = false, onExpand, onCollapse 
       transition={{ duration: 0.6, delay: index * 0.1 }}
       viewport={{ once: true, margin: "-100px" }}
       className="group cursor-pointer"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="relative overflow-hidden rounded-sm bg-card aspect-[4/3] mb-6">
-        <AnimatePresence mode="wait">
+      <Link
+        to={`/projects/${project.id}`}
+        className="block"
+      >
+        <div className="relative overflow-hidden rounded-sm bg-card aspect-[4/3] mb-6">
           {!imageError ? (
             <motion.img
-              key={isHovered && project.gifPreview ? "gif" : "thumbnail"}
-              src={isHovered && project.gifPreview ? project.gifPreview : project.thumbnail}
+              src={thumbnailImageMap[project.thumbnail] || project.thumbnail}
               alt={project.title}
               className="w-full h-full object-cover"
-              initial={{ opacity: 0, x: 8 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -8 }}
-              transition={{ duration: 0.4, ease: "easeInOut" }}
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
               onError={handleImageError}
             />
           ) : (
             <div className="w-full h-full bg-gradient-to-br from-muted to-secondary" />
           )}
-        </AnimatePresence>
 
-        <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/5 transition-colors duration-500" />
+          <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/5 transition-colors duration-500" />
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileHover={{ opacity: 1 }}
-          className="absolute top-4 right-4 w-10 h-10 rounded-full bg-primary flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        >
-          <ArrowUpRight className="w-5 h-5 text-primary-foreground" />
-        </motion.div>
-      </div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileHover={{ opacity: 1 }}
+            className="absolute top-4 right-4 w-10 h-10 rounded-full bg-primary flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          >
+            <ArrowUpRight className="w-5 h-5 text-primary-foreground" />
+          </motion.div>
+        </div>
+      </Link>
 
       <Link
         to={`/projects/${project.id}`}

@@ -61,22 +61,24 @@ const Art = () => {
             transition={{ duration: 0.7 }}
             className="mb-16"
           >
-            <span className="font-display text-sm tracking-widest uppercase text-muted-foreground">
+            <span className="font-display text-sm tracking-widest uppercase text-muted-foreground ">
               Art Portfolio
             </span>
-            <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mt-2">
-              Visual
+            <h1 className="font-display font-semibold text-5xl lowercase tracking-widest md:text-5xl font-bold text-foreground my-4">
+              sophia's 
               <br />
-              <span className="text-primary">Explorations</span>
+              <p className="text-primary mt-4">artwork</p>
             </h1>
             
             {/* Biographic Blurb */}
             <div className="mt-8 max-w-2xl">
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Art has been a long-standing creative practice alongside my work in software engineering, 
-                including years of competitive participation and formal recognition. While no longer pursuing 
-                it professionally, I continue creating as a way to explore form, storytelling, and visual 
-                problem-solving—skills that inform my approach to design and user experience in software development.
+              <p className="text-md text-muted-foreground leading-relaxed">
+              Art has always been a meaningful creative outlet alongside my work in software engineering. Over the years, 
+              I’ve participated in competitions and received formal recognition, but today I approach art as a personal 
+              practice—a way to explore form, storytelling, and visual problem-solving. This creative perspective 
+              influences how I think about design and user experience in software, helping me bring intention, 
+              clarity, and aesthetic consideration to the projects I build, while maintaining a balance between work 
+              and personal passions.
               </p>
             </div>
           </motion.div>
@@ -85,20 +87,11 @@ const Art = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
+            className="flex items-start justify-center min-h-[400px] py-20"
           >
-            {artworks.map((artwork, index) => (
-              <ArtPiece
-                key={artwork.title}
-                title={artwork.title}
-                year={artwork.year}
-                medium={artwork.medium}
-                image={artwork.image}
-                index={index}
-                award={artwork.award}
-                auction={artwork.auction}
-              />
-            ))}
+            <p className="text-lg text-muted-foreground font-medium lowercase hover:font-semibold">
+              Art Gallery Coming Soon
+            </p>
           </motion.div>
         </div>
       </main>

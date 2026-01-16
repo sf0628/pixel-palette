@@ -30,7 +30,7 @@ const experiences = [
   {
     title: "Software Developer",
     company: "NUROVER",
-    period: "September 2024 – Present",
+    period: "September 2024 – September 2025",
     description: "Implemented interactive UI elements (buttons, LED Matrix) that publish messages to ROS 2 topics, controlling robot behavior and expanding range of customizable behaviors.",
     achievements: [
       "Conducted system integration tests using ROS 2 bring-up",
@@ -113,7 +113,7 @@ const Resume = () => {
           >
             <Link
               to="/"
-              className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm"
+              className="inline-flex items-center gap-2 text-muted-foreground text-sm hover:text-primary transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm"
             >
               <ArrowLeft className="w-4 h-4" aria-hidden="true" />
               <span>back to portfolio</span>
@@ -127,16 +127,16 @@ const Resume = () => {
             transition={{ duration: 0.6 }}
             className="mt-8 mb-16"
           >
-            <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">
+            <h1 className="font-display font-semibold text-5xl lowercase tracking-widest md:text-5xl font-bold text-foreground mb-4">
               Sophia Fu
             </h1>
-            <p className="text-xl text-muted-foreground mb-6">
+            <p className="text-lg lowercase tracking-wide text-muted-foreground mb-6">
               Software Developer
             </p>
             <div className="flex flex-wrap gap-4">
               <a
                 href="mailto:fu.so@northeastern.edu"
-                className="text-sm text-primary hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm"
+                className="text-sm text-muted-foreground hover:underline hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm"
               >
                 fu.so@northeastern.edu
               </a>
@@ -145,7 +145,7 @@ const Resume = () => {
                 href="https://github.com/sf0628"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-primary transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm"
+                className="inline-flex items-center lowercase gap-1 text-sm text-muted-foreground hover:text-primary transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm"
               >
                 GitHub
                 <ExternalLink className="w-3 h-3" aria-hidden="true" />
@@ -155,7 +155,7 @@ const Resume = () => {
                 href="https://linkedin.com/in/fusophia"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-primary transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm"
+                className="inline-flex items-center lowercase gap-1 text-sm text-muted-foreground hover:text-primary transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm"
               >
                 LinkedIn
                 <ExternalLink className="w-3 h-3" aria-hidden="true" />
@@ -173,7 +173,15 @@ const Resume = () => {
                 link.click();
                 document.body.removeChild(link);
               }}
-              className="mt-8 inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium transition-colors hover:bg-primary/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            className="
+              mt-8 inline-flex items-center gap-2 px-6 py-3
+              bg-card text-primary rounded-lg font-medium
+              transition-colors
+              focus-visible:ring-2
+              focus-visible:ring-primary
+              focus-visible:ring-offset-2
+              focus-visible:ring-offset-background
+            "
               aria-label="Download resume as PDF"
             >
               <Download className="w-4 h-4" aria-hidden="true" />
@@ -189,7 +197,7 @@ const Resume = () => {
             className="mb-16"
             aria-labelledby="experience-heading"
           >
-            <h2 id="experience-heading" className="font-display text-2xl font-bold text-foreground mb-8">
+            <h2 id="experience-heading" className="font-display text-lg tracking-widest lowercase font-bold text-foreground mb-8">
               Experience
             </h2>
             <div className="space-y-8">

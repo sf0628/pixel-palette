@@ -1,0 +1,7 @@
+correlation_insights.png: a page that analyzes the relationships between different financial and demographic metrics
+correlation_spending_market.png: after selecting the correlaiton type of 'Spending vs Market Conditions', a graphical view displays the relationship on x and y axis with a key insights summary at the bottom
+what_if_scenarios.png: Scenario Analysis page that, allows users to select a simulated 'Scenario Type' such 'Career Change' and how that would affect the digital twin'
+export_import.png: This page allows users to export digital twin data (json, pdf), or import a previously saved twin.
+price_recommendations.png: This page generates a personalized price recommendation and displays the market, demograhics, analysis of price distribution (bar chart) + sensitivity (line chart), and recommenations for that product.
+user_demogrpahics.png: This page breaks down a detailed demograhic summary of a financial digital twin.
+create_twin.png: This is the front page of this product, where users use natural language to generate a financial digital twin.

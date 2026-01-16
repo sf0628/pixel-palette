@@ -84,7 +84,7 @@ const Navigation = () => {
         role="navigation"
         aria-label="Main navigation"
       >
-        <div className="pl-4 top-0 flex items-center justify-between max-w-7xl mx-auto">
+        <div className="relative pl-4 top-0 flex items-center justify-between max-w-7xl mx-auto">
         <Link 
           to="/" 
           className="text-xl font-semibold tracking-tight text-foreground hover:text-primary transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm motion-reduce:transition-none hidden md:block"
@@ -92,32 +92,37 @@ const Navigation = () => {
         >
           SF
         </Link>
+
         
-        <div className="flex items-center gap-6" role="menubar">
-          {links.map((link) => (
-            <Link
-              key={link.path}
-              to={link.path}
-              role="menuitem"
-              className={`relative text-sm font-medium tracking-wide transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm motion-reduce:transition-none ${
-                location.pathname === link.path 
-                  ? "text-primary" 
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-              aria-current={location.pathname === link.path ? "page" : undefined}
-            >
-              {link.label}
-              {location.pathname === link.path && (
-                <motion.div
-                  layoutId="nav-indicator"
-                  className="absolute -bottom-1 left-0 right-0 h-px bg-primary motion-reduce:hidden"
-                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                />
-              )}
-            </Link>
-          ))}
-          <ThemeToggle />
-        </div>
+          <div className="absolute left-1/2 -translate-x-1/2
+            flex items-center gap-12 sm:gap-6
+            md:static md:translate-x-50" role="menubar">
+            {links.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                role="menuitem"
+                className={`relative text-sm font-medium tracking-wide transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm motion-reduce:transition-none ${
+                  location.pathname === link.path 
+                    ? "text-primary" 
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+                aria-current={location.pathname === link.path ? "page" : undefined}
+              >
+                {link.label}
+                {location.pathname === link.path && (
+                  <motion.div
+                    layoutId="nav-indicator"
+                    className="absolute -bottom-1 left-0 right-0 h-px bg-primary motion-reduce:hidden"
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  />
+                )}
+              </Link>
+            ))}
+          </div>
+          <div className="sm:absolute  sm:right-0">
+            <ThemeToggle />
+          </div>
       </div>
       </motion.nav>
     </>
