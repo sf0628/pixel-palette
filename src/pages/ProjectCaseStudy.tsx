@@ -6,7 +6,7 @@ import { ArrowLeft, ExternalLink, Github, Play, ChevronLeft, ChevronRight, Chevr
 import { getProjectById, getProjectNavigation } from "@/data/projects";
 import { useEffect, useState } from "react";
 
-// Import ProsperouSSS images
+// Import project images
 import createTwinImg from "@/assets/prosperouSSS/create_twin.png";
 import powerpointImg from "@/assets/prosperouSSS/powerpoint.png";
 import userDemographicsImg from "@/assets/prosperouSSS/user_demographics.png";
@@ -15,9 +15,10 @@ import correlationSpendingMarketImg from "@/assets/prosperouSSS/correlation_spen
 import whatIfScenariosImg from "@/assets/prosperouSSS/what_if_scenarios.png";
 import priceRecommendationsImg from "@/assets/prosperouSSS/price_recommenations.png";
 import exportImportImg from "@/assets/prosperouSSS/export_import.png";
+import textToCadTitleCard from "@/assets/text-to-cad/title_card.png";
 
 // Map image paths to imported images
-const prosperousImageMap: Record<string, string> = {
+const projectImageMap: Record<string, string> = {
   "/src/assets/prosperouSSS/create_twin.png": createTwinImg,
   "/src/assets/prosperouSSS/powerpoint.png": powerpointImg,
   "/src/assets/prosperouSSS/user_demographics.png": userDemographicsImg,
@@ -26,11 +27,11 @@ const prosperousImageMap: Record<string, string> = {
   "/src/assets/prosperouSSS/what_if_scenarios.png": whatIfScenariosImg,
   "/src/assets/prosperouSSS/price_recommenations.png": priceRecommendationsImg,
   "/src/assets/prosperouSSS/export_import.png": exportImportImg,
+  "/src/assets/text-to-cad/title_card.png": textToCadTitleCard,
 };
 
 const ProjectImage = ({ src, caption }: { src: string; caption?: string }) => {
-  // Get the imported image from the map, or fallback to the original path
-  const imageSrc = prosperousImageMap[src] || src;
+  const imageSrc = projectImageMap[src] || src;
   
   return (
     <figure className="my-6">
@@ -102,6 +103,8 @@ const ProjectCaseStudy = () => {
   if (!project) {
     return <Navigate to="/" replace />;
   }
+
+  const isComingSoon = !project.valueProposition;
 
   const Section = ({ 
     id,
@@ -197,8 +200,7 @@ const ProjectCaseStudy = () => {
         aria-valuemax={100}
       />
 
-      {/* ScrollSpy Navigation */}
-      <ScrollSpy sections={projectSections} />
+      {!isComingSoon && <ScrollSpy sections={projectSections} />}
 
       <main className="pt-32 pb-20 px-6 md:px-12 lg:px-20">
         <div className="max-w-4xl mx-auto">
@@ -235,37 +237,37 @@ const ProjectCaseStudy = () => {
               {project.title}
             </h1>
             <p className="text-xl text-muted-foreground mb-6">
-              {project.valueProposition}
+              {isComingSoon ? project.fullDescription : project.valueProposition}
             </p>
 
-            <div className="flex flex-wrap items-center gap-4 mb-8">
-              {project.links?.liveDemo && (
-                <a
-                  href={project.links.liveDemo}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium transition-colors hover:bg-primary/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-                >
-                  <Play className="w-4 h-4" />
-                  Live Demo
-                  <ExternalLink className="w-4 h-4" />
-                </a>
-              )}
-              {project.links?.github && (
-                <a
-                  href={project.links.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 border border-border text-foreground rounded-lg font-medium transition-colors hover:bg-secondary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-                >
-                  <Github className="w-4 h-4" />
-                  View Code
-                  <ExternalLink className="w-4 h-4" />
-                </a>
-              )}
-            </div>
+              <div className="flex flex-wrap items-center gap-4 mb-8">
+                {project.links?.liveDemo && (
+                  <a
+                    href={project.links.liveDemo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium transition-colors hover:bg-primary/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                  >
+                    <Play className="w-4 h-4" />
+                    Live Demo
+                    <ExternalLink className="w-4 h-4" />
+                  </a>
+                )}
+                {project.links?.github && (
+                  <a
+                    href={project.links.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-6 py-3 border border-border text-foreground rounded-lg font-medium transition-colors hover:bg-secondary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                  >
+                    <Github className="w-4 h-4" />
+                    View Code
+                    <ExternalLink className="w-4 h-4" />
+                  </a>
+                )}
+              </div>
 
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 mb-8">
               {project.tags.map((tag) => (
                 <span
                   key={tag}
@@ -275,59 +277,75 @@ const ProjectCaseStudy = () => {
                 </span>
               ))}
             </div>
+
+            {isComingSoon && (
+              <p className="text-lg text-muted-foreground italic">
+                More details coming soon.
+              </p>
+            )}
           </motion.header>
 
+          {!isComingSoon && (
+          <>
           {/* Problem & Goals */}
           <Section id="problem-goals" title="Problem & Goals">
             <div className="space-y-6">
               {project.images?.filter(img => img.section === "problem-goals").map((img, idx) => (
                 <ProjectImage key={idx} src={img.src} caption={img.caption} />
               ))}
-              <div>
-                <h3 className="font-display text-xl font-semibold text-foreground mb-3">
-                  Problem Statement
-                </h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  {project.problemStatement}
-                </p>
-              </div>
+              {project.problemStatement && (
+                <div>
+                  <h3 className="font-display text-xl font-semibold text-foreground mb-3">
+                    Problem Statement
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    {project.problemStatement}
+                  </p>
+                </div>
+              )}
 
-              <div>
-                <h3 className="font-display text-xl font-semibold text-foreground mb-3">
-                  Target Users
-                </h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  {project.targetUsers}
-                </p>
-              </div>
+              {project.targetUsers && (
+                <div>
+                  <h3 className="font-display text-xl font-semibold text-foreground mb-3">
+                    Target Users
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    {project.targetUsers}
+                  </p>
+                </div>
+              )}
 
-              <div>
-                <h3 className="font-display text-xl font-semibold text-foreground mb-3">
-                  Success Criteria
-                </h3>
-                <ul className="space-y-2">
-                  {project.successCriteria.map((criterion, i) => (
-                    <li key={i} className="flex items-start gap-3 text-muted-foreground">
-                      <span className="text-primary mt-1.5">▸</span>
-                      {criterion}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              {project.successCriteria && project.successCriteria.length > 0 && (
+                <div>
+                  <h3 className="font-display text-xl font-semibold text-foreground mb-3">
+                    Success Criteria
+                  </h3>
+                  <ul className="space-y-2">
+                    {project.successCriteria.map((criterion, i) => (
+                      <li key={i} className="flex items-start gap-3 text-muted-foreground">
+                        <span className="text-primary mt-1.5">▸</span>
+                        {criterion}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
 
-              <div>
-                <h3 className="font-display text-xl font-semibold text-foreground mb-3">
-                  Constraints
-                </h3>
-                <ul className="space-y-2">
-                  {project.constraints.map((constraint, i) => (
-                    <li key={i} className="flex items-start gap-3 text-muted-foreground">
-                      <span className="text-primary mt-1.5">▸</span>
-                      {constraint}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              {project.constraints && project.constraints.length > 0 && (
+                <div>
+                  <h3 className="font-display text-xl font-semibold text-foreground mb-3">
+                    Constraints
+                  </h3>
+                  <ul className="space-y-2">
+                    {project.constraints.map((constraint, i) => (
+                      <li key={i} className="flex items-start gap-3 text-muted-foreground">
+                        <span className="text-primary mt-1.5">▸</span>
+                        {constraint}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           </Section>
 
@@ -800,6 +818,9 @@ const ProjectCaseStudy = () => {
                 </div>
               </div>
             </Section>
+          )}
+
+          </>
           )}
 
           {/* Previous/Next Project Navigation */}

@@ -8,13 +8,13 @@ export interface Project {
   tags: string[];
   role: string;
   scope: string;
-  highlights: string[];
+  highlights?: string[];
   // Case study fields
-  valueProposition: string;
-  problemStatement: string;
-  targetUsers: string;
-  successCriteria: string[];
-  constraints: string[];
+  valueProposition?: string;
+  problemStatement?: string;
+  targetUsers?: string;
+  successCriteria?: string[];
+  constraints?: string[];
   research?: {
     competitiveAnalysis?: string;
     keyInsights: string[];
@@ -78,6 +78,23 @@ export interface Project {
 }
 
 export const projects: Project[] = [
+  {
+    id: "text-to-cad",
+    title: "Text to CAD",
+    shortDescription: "A web application that uses AI to convert text to CAD models.",
+    fullDescription: "Currently building a text to CAD web application that converts text to CAD models using a combination of AI and CAD software.",
+    thumbnail: "/src/assets/text-to-cad/title_card.png",
+    gifPreview: "/placeholder-text-to-cad-preview.gif",
+    tags: ["Next.js", "TypeScript", "TailwindCSS", "Shadcn/UI", "OpenSCAD", "GPT-5"],
+    role: "developer",
+    scope: "Web application",
+    links: {
+      github: "https://github.com/sf0628/cad"
+    },
+    images: [
+      { src: "/src/assets/text-to-cad/title_card.png", caption: "Text to CAD — AI-powered text-to-CAD web app.", section: "overview" }
+    ]
+  },
   {
     id: "prosperous",
     title: "ProsperouSSS",

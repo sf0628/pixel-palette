@@ -9,6 +9,7 @@ import prosperousTitleCard from "@/assets/prosperouSSS/title_card.png";
 import edushareTitleCard from "@/assets/edushare-hub/title_card.png";
 import stockManagerTitleCard from "@/assets/stock-manager/title_card.png";
 import wardrobeWizardTitleCard from "@/assets/wardrobe-wizard/title_card.png";
+import textToCadTitleCard from "@/assets/text-to-cad/title_card.png";
 
 // Map thumbnail paths to imported images
 const thumbnailImageMap: Record<string, string> = {
@@ -16,6 +17,7 @@ const thumbnailImageMap: Record<string, string> = {
   "/src/assets/edushare-hub/title_card.png": edushareTitleCard,
   "/src/assets/stock-manager/title_card.png": stockManagerTitleCard,
   "/src/assets/wardrobe-wizard/title_card.png": wardrobeWizardTitleCard,
+  "/src/assets/text-to-cad/title_card.png": textToCadTitleCard,
 };
 
 interface ProjectCardProps {
@@ -87,7 +89,7 @@ const ProjectCard = ({ project, index, isExpanded = false, onExpand, onCollapse 
         <div className="mb-6">
           <h4 className="font-display font-semibold text-foreground mb-3">Key Highlights</h4>
           <ul className="space-y-2">
-            {project.highlights.map((highlight, i) => (
+            {(project.highlights ?? []).map((highlight, i) => (
               <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
                 <span className="text-primary mt-0.5" aria-hidden="true">▸</span>
                 {highlight}

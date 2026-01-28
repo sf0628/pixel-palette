@@ -1,12 +1,15 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import ProjectCard from "./ProjectCard";
-import { ArrowRight } from "lucide-react";
+import { ArrowDown, ArrowRight } from "lucide-react";
 import { useState } from "react";
 import { projects } from "@/data/projects";
 
+const LANDING_PROJECTS_COUNT = 4;
+
 const WorkSection = () => {
   const [expandedProjectId, setExpandedProjectId] = useState<string | null>(null);
+  const landingProjects = projects.slice(0, LANDING_PROJECTS_COUNT);
 
   const handleExpand = (projectId: string) => {
     setExpandedProjectId(projectId);
@@ -45,7 +48,7 @@ const WorkSection = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-16">
           <AnimatePresence mode="wait">
-            {projects.map((project, index) => {
+            {landingProjects.map((project, index) => {
               const isExpanded = expandedProjectId === project.id;
               const shouldShow = !expandedProjectId || isExpanded;
 
@@ -64,6 +67,22 @@ const WorkSection = () => {
             })}
           </AnimatePresence>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          viewport={{ once: true }}
+          className="mt-16 flex justify-center"
+        >
+          <Link
+            to="/project-list"
+            className="inline-flex items-center gap-2 text-sm font-display text-muted-foreground hover:text-primary transition-colors group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm"
+          >
+            <span>view more</span>
+            <ArrowDown className="w-4 h-4 group-hover:translate-y-1 transition-transform" aria-hidden="true" />
+          </Link>
+        </motion.div>
       </div>
     </section>
   );

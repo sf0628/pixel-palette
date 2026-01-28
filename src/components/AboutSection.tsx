@@ -77,7 +77,7 @@ const experiences: Experience[] = [
   {
     title: "Software Engineer Intern",
     company: "L3Harris Technologies",
-    period: "May – August 2025",
+    period: "May – July 2025",
     description:
       "Optimized C++ driver-level caching mechanisms to reduce Web GUI update latency from ~3 seconds to near-instantaneous for satellite communication components (power amplifiers, modems, beacon receivers) within a Linux environment.",
     achievements: [
